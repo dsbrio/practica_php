@@ -1,0 +1,12 @@
+<h1>Bienvenido a Mastermind :o</h1>
+
+<a href="{{ path('new') }}">Nueva partida</a>
+<br/>
+
+<ul>
+    {% for game in games %}
+        <li>
+            <a href="{{ path('games', {'gameid': game}) }}">Partida {{game}}</a>
+        </li>
+    {% endfor %}
+</ul>

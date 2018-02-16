@@ -6,18 +6,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HelloWorldController extends Controller
+class NewGameController extends Controller
 {
     /**
-      * @Route("/hello/world")
+      * @Route("/new", name="new")
       */
-    public function hello()
+    public function start()
     {
-        $number = mt_rand(0, 100);
-
-        return $this->render('hello/hello.html.twig', array(
-            'number' => $number,
-            'saludo' => "PRUEBAAAA"
+        return $this->render('games/newgame.html.twig', array(
+            'id' => "123"
         ));
     }
+
 }

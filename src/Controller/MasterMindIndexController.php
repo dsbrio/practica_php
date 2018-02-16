@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MasterMindIndexController extends Controller
 {
     /**
-      * @Route("/")
+      * @Route("/", name = "index")
       */
     public function start()
     {

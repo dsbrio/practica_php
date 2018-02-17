@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\MasterMindGame;
 
 class NewGameController extends Controller
 {
@@ -13,31 +14,28 @@ class NewGameController extends Controller
       */
     public function start()
     {
+
+         // you can fetch the EntityManager via $this->getDoctrine()
+        // or you can add an argument to your action: index(EntityManagerInterface $em)
+        $em = $this->getDoctrine()->getManager();
+
         $newGame = new MasterMindGame();
-        $newGame->creationDate = date("F j, Y, g:i a");
-        $newGame->colorList = array(
-            rand ( 0 , 8 ),
-            rand ( 0 , 8 ),
-            rand ( 0 , 8 ),
-            rand ( 0 , 8 )
-        );
-        $newGame->state = State::STARTED;
+        $newGame->setName('MMGame1');
+        $newGame->setCreationDate(new \DateTime());
+
+        // guardar en BD
+        $em->persist($newGame);
+
+        // ejecutar (realmente) la query
+        $em->flush();
 
         return $this->render('games/game.html.twig', array(
-            'id' => "123",
-            'creationDate' => $newGame->creationDate,
-            'state' => $newGame->state,
+            'id' => $newGame->getId(),
+            'creationDate' => $newGame->getCreationDate()->format('Y-m-d H:i:s'),
+            'state' => "TODO obtener estado de la entity :D"
 
         ));
     }
-}
-
-class MasterMindGame { 
-    public $name; 
-    public $creationDate; 
-    public $colorList;
-    public $state;
-    public $moves;
 }
 
 abstract class Colors

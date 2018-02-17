@@ -16,5 +16,39 @@ class MasterMindGame
      */
     private $id;
 
-    // add your own fields
+    
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    private $creationDate;
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    public function setcreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+    }
 }

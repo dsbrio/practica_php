@@ -34,12 +34,16 @@ class NewGameController extends Controller
                 $newGame->setName('MasterMindGame');
             };
             $newGame->setCreationDate(new \DateTime());
+
+            //código de colores de 6 posiciones y 10 colores posibles (0-9)
             $newGame->setColorList(
                 array(
-                    rand(0,8),
-                    rand(0,8),
-                    rand(0,8),
-                    rand(0,8)
+                    rand(0,9),
+                    rand(0,9),
+                    rand(0,9),
+                    rand(0,9),
+                    rand(0,9),
+                    rand(0,9)
                 )
             );
             $newGame->setState(State::STARTED);

@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\MasterMindGame;
 
 class MasterMindIndexController extends Controller
 {
@@ -13,7 +14,9 @@ class MasterMindIndexController extends Controller
       */
     public function start()
     {
-        $games = array('juegoMock1', 'juegoMock2', 'juegoMock3');
+        $games = $this->getDoctrine()
+        ->getRepository(MasterMindGame::class)
+        ->findAll();
 
         return $this->render('index.html.twig', array(
             'games' => $games,

@@ -1,9 +1,8 @@
 <?php
-// src/Controller/HelloWorldController.php
+
 namespace App\Controller;
 
-use App\Entity\MasterMindMove;
-use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\MasterMindGame;
@@ -24,8 +23,9 @@ class MasterMindIndexController extends Controller
         ));
     }
 
+
     /**
-      * @Route("/games/{gameid}", name="games")
+      * @Route("/detail/{gameid}", name="detail")
       */
       public function obtainGameDetails($gameid)
       {
@@ -39,19 +39,13 @@ class MasterMindIndexController extends Controller
             //buscamos las jugadas realizadas
 
 
-
-
             //Formateamos la fecha.
-            $createDateString = date_format($gameInfo->getCreationDate(), 'd-m-Y');
+            $createDateString =  $gameInfo->getCreationDate()->format('Y-m-d H:i:s');
 
             return $this->render('./games/game.html.twig', array(
                 'name' => $gameInfo -> getName(),
                 'state' => $gameInfo->getState(),
                 'creationDate' => $createDateString
             ));
-
-            /*return new Response(
-                '<html><body>Buscar el juego: '.$gameid.'</body></html>'
-            );*/
       }
 }

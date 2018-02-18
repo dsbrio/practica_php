@@ -5,8 +5,12 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\MasterMindGame;
+use App\Entity\Move;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\State;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PlayController extends Controller
 {
@@ -14,7 +18,7 @@ class PlayController extends Controller
     /**
       * @Route("/games/{gameid}", name="games")
       */
-      public function obtainGameDetails($gameid)
+      public function obtainGameDetails(Request $request, $gameid)
       {
          
             $game = $this->getDoctrine()
@@ -24,10 +28,42 @@ class PlayController extends Controller
 
             if(null!==$game && State::STARTED===$game->getState()){
 
-                //La partida no ha finalizado, puede continuarla.
-                return $this->render('games/play.html.twig', array(
-                    'name' => $game->getName(),
-                ));
+                $defaultData = array('message' => 'Introduce movimiento');
+                $form = $this->createFormBuilder($defaultData)
+                    ->add('colorList', TextType::class, array('label' => 'Colores: '))
+                    ->add('save', SubmitType::class, array('label' => 'Enviar movimiento'))
+                    ->getForm();
+
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+
+                    $colorsString = $form->getData()['colorList'];
+                    
+                    $move = new Move();
+                    $move->setMasterMindGame($game);
+                    $move->setDate(new \DateTime());
+                    $move->setColorList(
+                        str_split($colorsString)
+                    );
+                    $move->setEvaluation("");
+
+                    //obtenemos el acceso a la BD
+                    $em = $this->getDoctrine()->getManager();
+                    // guardar en BD
+                    $em->persist($move);
+                    // ejecutar (realmente) la query
+                    $em->flush();  
+
+                    return new Response(
+                        '<html><body>movimiento insertado</body></html>'
+                    );
+                }else{
+                    return $this->render('games/play.html.twig', array(
+                        'name' => $game->getName(),
+                        'form' => $form->createView(),
+                    )); 
+                }
             }else if(null!==$game && State::STARTED!==$game->getState()){
 
                 $state = $game->getState();

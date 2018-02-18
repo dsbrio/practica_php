@@ -19,8 +19,7 @@ class MasterMindIndexController extends Controller
         ->findAll();
 
         return $this->render('index.html.twig', array(
-            'games' => $games,
-            'saludo' => "PRUEBAAAA"
+            'games' => $games
         ));
     }
 

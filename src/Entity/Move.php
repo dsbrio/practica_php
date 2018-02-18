@@ -16,6 +16,8 @@ class Move
      */
     private $id;
 
+
+
     /**
      * @ORM\ManyToOne(targetEntity="MasterMindGame")
      */
@@ -57,6 +59,8 @@ class Move
         return $this;
     }
 
+
+
     /**
      * Get the value of evaluation
      */ 
@@ -77,26 +81,6 @@ class Move
         return $this;
     }
 
-
-    /**
-     * Get the value of gameId
-     */ 
-    public function getGameId()
-    {
-        return $this->gameId;
-    }
-
-    /**
-     * Set the value of gameId
-     *
-     * @return  self
-     */ 
-    public function setGameId($gameId)
-    {
-        $this->gameId = $gameId;
-
-        return $this;
-    }
 
     /**
      * Get the value of date
@@ -124,5 +108,21 @@ class Move
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMasterMindGame()
+    {
+        return $this->masterMindGame;
+    }
+
+    /**
+     * @param mixed $masterMindGame
+     */
+    public function setMasterMindGame($masterMindGame): void
+    {
+        $this->masterMindGame = $masterMindGame;
     }
 }

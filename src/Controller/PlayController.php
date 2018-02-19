@@ -12,6 +12,9 @@ use App\Entity\State;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+
+use App\Util\ValidateMoveUtil;
+
 class PlayController extends Controller
 {
 
@@ -39,14 +42,20 @@ class PlayController extends Controller
                 if ($form->isSubmitted() && $form->isValid()) {
 
                     $colorsString = $form->getData()['colorList'];
-                    
+
+                    $validationMove = new ValidateMoveUtil();
+                    $responseValidationMove = $validationMove->validateMove($colorsString);
+
+
+
+
                     $move = new Move();
                     $move->setMasterMindGame($game);
                     $move->setDate(new \DateTime());
                     $move->setColorList(
                         str_split($colorsString)
                     );
-                    $move->setEvaluation("");
+                    $move->setEvaluation($responseValidationMove->getEvaluation());
 
                     //obtenemos el acceso a la BD
                     $em = $this->getDoctrine()->getManager();

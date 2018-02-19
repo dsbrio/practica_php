@@ -125,4 +125,11 @@ class Move
     {
         $this->masterMindGame = $masterMindGame;
     }
+
+
+    const DEFINED_EVALUATION_MOVE= array(
+        "FAIL",
+        "OK"
+    );
+
 }

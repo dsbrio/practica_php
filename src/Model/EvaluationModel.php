@@ -7,32 +7,14 @@ namespace App\Model;
 class EvaluationModel
 {
 
-    private $evaluation;
-
     private $black;
 
     private $white;
 
     private $maxNumMove;
 
-
     private $move;
 
-    /**
-     * @return mixed
-     */
-    public function getEvaluation()
-    {
-        return $this->evaluation;
-    }
-
-    /**
-     * @param mixed $evaluation
-     */
-    public function setEvaluation($evaluation): void
-    {
-        $this->evaluation = $evaluation;
-    }
 
     /**
      * @return mixed

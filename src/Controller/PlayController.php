@@ -44,23 +44,17 @@ class PlayController extends Controller
                     $colorsString = $form->getData()['colorList'];
 
                     $validationMove = new ValidateMoveUtil();
-                    $responseValidationMove = $validationMove->validateMove($colorsString);
+                    $responseValidationMove = $validationMove->validateMove($colorsString,$game);
 
 
 
 
-                    $move = new Move();
-                    $move->setMasterMindGame($game);
-                    $move->setDate(new \DateTime());
-                    $move->setColorList(
-                        str_split($colorsString)
-                    );
-                    $move->setEvaluation($responseValidationMove->getEvaluation());
+
 
                     //obtenemos el acceso a la BD
                     $em = $this->getDoctrine()->getManager();
                     // guardar en BD
-                    $em->persist($move);
+                    $em->persist($responseValidationMove->getMove());
                     // ejecutar (realmente) la query
                     $em->flush();  
 

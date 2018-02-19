@@ -40,28 +40,38 @@ class PlayController extends Controller
 
                     $colorsString = $form->getData()['colorList'];
                     
-                    $move = new Move();
-                    $move->setMasterMindGame($game);
-                    $move->setDate(new \DateTime());
-                    $move->setColorList(
-                        str_split($colorsString)
-                    );
-                    $move->setEvaluation("");
+                    if(!preg_match('/^[0-9]{6}$/', $colorsString)){
+                        return $this->render('games/play.html.twig', array(
+                            'name' => $game->getName(),
+                            'form' => $form->createView(),
+                            'message' => "Debes escribir 6 números entre el 0 y el 9",
+                        )); 
+                    }else{
+                        $move = new Move();
+                        $move->setMasterMindGame($game);
+                        $move->setDate(new \DateTime());
+                        $move->setColorList(
+                            str_split($colorsString)
+                        );
+                        $move->setEvaluation("");
+    
+                        //obtenemos el acceso a la BD
+                        $em = $this->getDoctrine()->getManager();
+                        // guardar en BD
+                        $em->persist($move);
+                        // ejecutar (realmente) la query
+                        $em->flush();  
+    
+                        return new Response(
+                            '<html><body>movimiento insertado</body></html>'
+                        );
+                    }
 
-                    //obtenemos el acceso a la BD
-                    $em = $this->getDoctrine()->getManager();
-                    // guardar en BD
-                    $em->persist($move);
-                    // ejecutar (realmente) la query
-                    $em->flush();  
-
-                    return new Response(
-                        '<html><body>movimiento insertado</body></html>'
-                    );
                 }else{
                     return $this->render('games/play.html.twig', array(
                         'name' => $game->getName(),
                         'form' => $form->createView(),
+                        'message' => "",
                     )); 
                 }
             }else if(null!==$game && State::STARTED!==$game->getState()){

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\MasterMindGame;
 use App\Entity\Move;
+use App\Entity\UserMovementInput;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\State;
@@ -25,12 +26,11 @@ class PlayController extends Controller
             ->getRepository(MasterMindGame::class)
             ->find($gameid);
 
-
             if(null!==$game && State::STARTED===$game->getState()){
 
-                $defaultData = array('message' => 'Introduce movimiento');
-                $form = $this->createFormBuilder($defaultData)
-                    ->add('colorList', TextType::class, array('label' => 'Colores: '))
+                $userMovementInput = new UserMovementInput();
+                $form = $this->createFormBuilder($userMovementInput)
+                    ->add('inputString', TextType::class, array('label' => 'Colores: '))
                     ->add('save', SubmitType::class, array('label' => 'Enviar movimiento'))
                     ->getForm();
 
@@ -38,9 +38,10 @@ class PlayController extends Controller
 
                 if ($form->isSubmitted() && $form->isValid()) {
 
-                    $colorsString = $form->getData()['colorList'];
+                    $userMovementInput = $form->getData();
                     
-                    if(!preg_match('/^[0-9]{6}$/', $colorsString)){
+                    //aunque ya se hace la validación de la regex a nivel de la entity UserMovementInput, comprobamos aquí también validación
+                    if(!preg_match('/^[0-9]{6}$/', $userMovementInput->inputString)){
                         return $this->render('games/play.html.twig', array(
                             'name' => $game->getName(),
                             'form' => $form->createView(),
@@ -51,7 +52,7 @@ class PlayController extends Controller
                         $move->setMasterMindGame($game);
                         $move->setDate(new \DateTime());
                         $move->setColorList(
-                            str_split($colorsString)
+                            str_split($userMovementInput->inputString)
                         );
                         $move->setEvaluation("");
     

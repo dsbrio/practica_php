@@ -87,10 +87,12 @@ class PlayController extends Controller
 
                         if(!$responseValidationMove->getWinGame() && null==$responseValidationMove->getMaxNumMove()){
 
+                            $historicResults = $this->obtainHistoricResults($game);
+
                             return $this->render('games/play.html.twig', array(
                                 'name' => $game->getName(),
                                 'form' => $form->createView(),
-                                'message' => "Jugada erronea, introduce otra combinación",
+                                'message' => "Jugada erronea, introduce otra combinación".$historicResults,
                             ));
                         }
     
@@ -119,5 +121,32 @@ class PlayController extends Controller
 
 
 
+      }
+
+      private function obtainHistoricResults($masterMindGame){
+
+        $moves = $this->getDoctrine()
+        ->getRepository(Move::class)
+        ->findBy(
+            ['masterMindGame' => $masterMindGame]
+        );
+
+        $stringHistoricResults = '';
+
+        $validationMove = new ValidateMoveUtil();
+        $validationMove->setDoctrine($this->getDoctrine());
+
+        for ($i = 0; $i < count($moves); $i++) {
+            $responseValidationMove = $validationMove->validateMove(
+                implode(',', $moves[$i]->getColorList()),
+                $masterMindGame
+            );
+            $stringHistoricResults .= 
+                implode($responseValidationMove->getBlack())
+                .implode($responseValidationMove->getWhite())
+                .'<br/>';
+        }
+
+        return $stringHistoricResults;
       }
 }

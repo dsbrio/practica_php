@@ -150,11 +150,20 @@ class ValidateMoveUtil
 
 
 
+    //obtenemos la lista de movimientos.
     private function getMove($gameId){
 
-        //TODO
+        $movesInfo = $this->getDoctrine()
+            ->getRepository(Move::class)
+            ->findBy(array(
+                'masterMindGame' =>$gameId
+            ));
+
+
+        return $movesInfo;
     }
 
+    //Actualizamos el juego con su nuevo estado.
     private function updateGame($game){
 
         //obtenemos el acceso a la BD
@@ -183,14 +192,15 @@ class ValidateMoveUtil
     }
 
 
-    private function validateMaxMove($gameid){
+    //Validamos que el movimiento sea correcto.
+    private function validateMaxMove($gameId){
 
         $validate = true;
 
         $movesInfo = $this->getDoctrine()
             ->getRepository(Move::class)
             ->findBy(array(
-                'masterMindGame' =>$gameid
+                'masterMindGame' =>$gameId
             ));
 
 

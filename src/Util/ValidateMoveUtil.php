@@ -17,7 +17,7 @@ class ValidateMoveUtil
         "OK"
     );
 
-    const MAX_MOVE_GAME=15;
+    const MAX_MOVE_GAME=3;
 
 
     private function validateMaxMove($gameid){
@@ -137,7 +137,7 @@ class ValidateMoveUtil
 
                 //Indicamos que se ha obtenido el maximo de movimientos.
                 $evaluationModel->setMaxNumMove(ValidateMoveUtil::MAX_MOVE_GAME);
-                
+
                 //indicamos que se ha perdido el juego.
                 $evaluationModel->setWinGame(false);
 

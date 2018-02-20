@@ -54,9 +54,7 @@ class PlayController extends Controller
 
                         //obtenemos la clase de validación
                         $validationMove = new ValidateMoveUtil();
-                        //$responseValidationMove = $validationMove->validateMove(str_split($userMovementInput->inputString),$game);
-
-                    $responseValidationMove = $validationMove->validateMove($userMovementInput->inputString,$game);
+                        $responseValidationMove = $validationMove->validateMove($userMovementInput->inputString,$game);
 
                         //obtenemos el acceso a la BD
                         //$em = $this->getDoctrine()->getManager();
@@ -64,10 +62,30 @@ class PlayController extends Controller
                         //$em->persist($responseValidationMove->getMove());
                         // ejecutar (realmente) la query
                         //$em->flush();
+
+                        if($responseValidationMove->getWinGame()){
+                            return new Response(
+                                '<html><body>Juego ganado</body></html>'
+                            );
+                        }
+
+                        if(!$responseValidationMove->getWinGame() && ValidateMoveUtil::MAX_MOVE_GAME==$responseValidationMove->getMaxNumMove()){
+
+                            return new Response(
+                                '<html><body>Juego perdido</body></html>'
+                            );
+                        }
+
+                        if(!$responseValidationMove->getWinGame() && null==$responseValidationMove->getMaxNumMove()){
+
+                            return $this->render('games/play.html.twig', array(
+                                'name' => $game->getName(),
+                                'form' => $form->createView(),
+                                'message' => "Jugada erronea, introduce otra combinación",
+                            ));
+                        }
     
-                        return new Response(
-                            '<html><body>movimiento insertado</body></html>'
-                        );
+
                     }
 
                 }else{

@@ -1,13 +1,57 @@
-<h1>Bienvenido a Mastermind :o</h1>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}
+        <div class="title">
+             <h1>Bienvenido a Mastermind :o</h1>
+        </div>
+        <div><a href="{{ path('new') }}" class="myButton">Nueva partida</a></div>
+        <div class="content-block">
 
-<a href="{{ path('new') }}">Nueva partida</a>
-<br/>
+            <div><img src="https://giltesa.com/wp-content/uploads/2010/12/mastermint.png" alt="Mastermind"></div>
 
-<ul>
-    {% for game in games %}
-        <li>
-            <a href="{{ path('games', {'gameid': game.id}) }}">Partida {{game.name}}</a>
-            <a href="{{ path('detail', {'gameid': game.id}) }}">Detalle Partida</a>
-        </li>
-    {% endfor %}
-</ul>
+
+
+                                <div class="content-list-games">
+
+                                    <div> <h3>Listado de Partidas </h3></div>
+
+                                     <div>
+
+                                       <ul>
+                                        {% for game in games %}
+                                                 <li>
+                                                      <a href="{{ path('games', {'gameid': game.id}) }}">Partida {{game.name}}</a>
+                                                      <a href="{{ path('detail', {'gameid': game.id}) }}"> = > Detalle Partida</a>
+                                                  </li>
+                                              {% endfor %}
+                                          </ul>
+                                       </div>
+
+
+                                </div>
+
+         </div>
+
+
+
+
+
+        <br/>
+
+
+
+
+        {% endblock %}
+        <script src="{{ asset('build/app.js') }}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
+
+

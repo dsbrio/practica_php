@@ -65,16 +65,16 @@ class PlayController extends Controller
                         //$em->flush();
 
                         if($responseValidationMove->getWinGame()){
-                            return new Response(
-                                '<html><body>Juego ganado</body></html>'
-                            );
+                            return $this->render('error/error.html.twig', array(
+                                'error' => 'Felicidades!!! Has ganado la partida, ¿Quieres jugar otra? Si es asi, vete a inicio y comienza una nueva partida.',
+                            ));
                         }
 
                         if(!$responseValidationMove->getWinGame() && ValidateMoveUtil::MAX_MOVE_GAME==$responseValidationMove->getMaxNumMove()){
 
-                            return new Response(
-                                '<html><body>Juego perdido</body></html>'
-                            );
+                            return $this->render('error/error.html.twig', array(
+                                'error' => 'Lo sentimos, has alcanzado el máximo de intentos y has perdido. ¿Quieres jugar otra? Si es asi, vete a inicio y comienza una nueva partida.',
+                            ));
                         }
 
                         if(!$responseValidationMove->getWinGame() && null==$responseValidationMove->getMaxNumMove()){

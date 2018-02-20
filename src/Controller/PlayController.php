@@ -29,8 +29,6 @@ class PlayController extends Controller
             ->getRepository(MasterMindGame::class)
             ->find($gameid);
 
-            $this->obtainHistoricResults($game);
-
             if(null!=$game && State::STARTED===$game->getState()){
 
                 $userMovementInput = new UserMovementInput();
@@ -87,10 +85,12 @@ class PlayController extends Controller
 
                         if(!$responseValidationMove->getWinGame() && null==$responseValidationMove->getMaxNumMove()){
 
+                            $historicResults = $this->obtainHistoricResults($game);
+
                             return $this->render('games/play.html.twig', array(
                                 'name' => $game->getName(),
                                 'form' => $form->createView(),
-                                'message' => "Jugada erronea, introduce otra combinación",
+                                'message' => "Jugada erronea, introduce otra combinación".$historicResults,
                             ));
                         }
     
@@ -145,6 +145,6 @@ class PlayController extends Controller
                 .'<br/>';
         }
 
-        echo $stringHistoricResults;
+        return $stringHistoricResults;
       }
 }

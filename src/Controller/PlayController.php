@@ -44,13 +44,13 @@ class PlayController extends Controller
                     $userMovementInput = $form->getData();
                     
                     //aunque ya se hace la validación de la regex a nivel de la entity UserMovementInput, comprobamos aquí también validación
-                   /* if(!preg_match('/^[0-9],{5}$[0-9]/', $userMovementInput->inputString)){
+                    if(!preg_match('/^([0-9],){5}[0-9]$/', $userMovementInput->inputString)){
                         return $this->render('games/play.html.twig', array(
                             'name' => $game->getName(),
                             'form' => $form->createView(),
                             'message' => "Debes escribir 6 números entre el 0 y el 9",
                         )); 
-                    }else{*/
+                    }else{
 
                         $validationMove = new ValidateMoveUtil();
                         //$responseValidationMove = $validationMove->validateMove(str_split($userMovementInput->inputString),$game);
@@ -67,7 +67,7 @@ class PlayController extends Controller
                         return new Response(
                             '<html><body>movimiento insertado</body></html>'
                         );
-                    //}
+                    }
 
                 }else{
                     return $this->render('games/play.html.twig', array(

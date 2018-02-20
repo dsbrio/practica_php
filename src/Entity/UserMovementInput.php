@@ -7,7 +7,7 @@ class UserMovementInput
 {
     /**
      * @Assert\Regex(
-     * pattern="/^[0-9]{6}$/",
+     * pattern="/^([0-9],){5}[0-9]$/",
      * message="Debes escribir 6 números entre el 0 y el 9"
      * )
      */

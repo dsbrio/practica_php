@@ -29,6 +29,8 @@ class PlayController extends Controller
             ->getRepository(MasterMindGame::class)
             ->find($gameid);
 
+            $this->obtainHistoricResults($game);
+
             if(null!=$game && State::STARTED===$game->getState()){
 
                 $userMovementInput = new UserMovementInput();
@@ -111,5 +113,32 @@ class PlayController extends Controller
 
 
 
+      }
+
+      private function obtainHistoricResults($masterMindGame){
+
+        $moves = $this->getDoctrine()
+        ->getRepository(Move::class)
+        ->findBy(
+            ['masterMindGame' => $masterMindGame]
+        );
+
+        $stringHistoricResults = '';
+
+        $validationMove = new ValidateMoveUtil();
+        $validationMove->setDoctrine($this->getDoctrine());
+
+        for ($i = 0; $i < count($moves); $i++) {
+            $responseValidationMove = $validationMove->validateMove(
+                implode(',', $moves[$i]->getColorList()),
+                $masterMindGame
+            );
+            $stringHistoricResults .= 
+                implode($responseValidationMove->getBlack())
+                .implode($responseValidationMove->getWhite())
+                .'<br/>';
+        }
+
+        echo $stringHistoricResults;
       }
 }

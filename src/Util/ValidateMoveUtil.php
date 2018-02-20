@@ -125,25 +125,24 @@ class ValidateMoveUtil
                 //indicamos que se ha perdido el juego.
                 $evaluationModel->setWinGame(false);
 
+            }else{
+                //Jugadas restantes.
+
+                $totalMove = $this->getMove($game->getId());
+
+                $evaluationModel->setRestNumMove(ValidateMoveUtil::MAX_MOVE_GAME - count($totalMove)+1);
+
             }
 
         }
 
-        //componemos el movimiento que se va a almacenar.
-        $move = new Move();
-        $move->setMasterMindGame($game);
-        $move->setDate(new \DateTime());
-        $move->setColorList($moveInfoArray);
-        $move->setEvaluation($evaluation);
-
-        $this->insertMove($move);
 
         //Seteamos el valor de los blancos y negros.
         $evaluationModel->setBlack($blackArray);
         $evaluationModel->setWhite($whiteArray);
 
-        //obtenemos el listado de todos los movimientos realizados.
-        $evaluationModel->setMove($this->getMove($game->getId()));
+        //seteamos el valor de la jugada si es correcta o no.
+        $evaluationModel->setMoveEvaluation($evaluation);
 
         return $evaluationModel;
     }

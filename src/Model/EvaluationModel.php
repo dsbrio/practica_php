@@ -19,10 +19,11 @@ class EvaluationModel
     //indica si el juego es ganado o no.
     private $winGame;
 
-    //lista de movimientos.
-    private $move;
+    //Evaluación del movimiento
+    private $moveEvaluation;
 
-
+    //indica el resto de movimientos que le quedan al usuario.
+    private $restNumMove;
 
 
     /**
@@ -76,18 +77,20 @@ class EvaluationModel
     /**
      * @return mixed
      */
-    public function getMove()
+    public function getMoveEvaluation()
     {
-        return $this->move;
+        return $this->moveEvaluation;
     }
 
     /**
-     * @param mixed $move
+     * @param mixed $moveEvaluation
      */
-    public function setMove($move): void
+    public function setMoveEvaluation($moveEvaluation): void
     {
-        $this->move = $move;
+        $this->moveEvaluation = $moveEvaluation;
     }
+
+
 
     /**
      * @return mixed
@@ -103,6 +106,22 @@ class EvaluationModel
     public function setWinGame($winGame): void
     {
         $this->winGame = $winGame;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRestNumMove()
+    {
+        return $this->restNumMove;
+    }
+
+    /**
+     * @param mixed $restNumMove
+     */
+    public function setRestNumMove($restNumMove): void
+    {
+        $this->restNumMove = $restNumMove;
     }
 
 

@@ -59,12 +59,18 @@ class PlayController extends Controller
                         $validationMove->setDoctrine($this->getDoctrine());
                         $responseValidationMove = $validationMove->validateMove($userMovementInput->inputString,$game);
 
+                        $move = new Move();
+                        $move->setMasterMindGame($game);
+                        $move->setDate(new \DateTime());
+                        $move->setColorList(str_split($userMovementInput->inputString));
+                        $move->setEvaluation($responseValidationMove->getMoveEvaluation());
+
                         //obtenemos el acceso a la BD
-                        //$em = $this->getDoctrine()->getManager();
+                        $em = $this->getDoctrine()->getManager();
                         // guardar en BD
-                        //$em->persist($responseValidationMove->getMove());
+                        $em->persist($move);
                         // ejecutar (realmente) la query
-                        //$em->flush();
+                        $em->flush();
 
                         if($responseValidationMove->getWinGame()){
                             return $this->render('error/error.html.twig', array(

@@ -7,13 +7,22 @@ namespace App\Model;
 class EvaluationModel
 {
 
+    //lista de colores  correctos y posicion correcta
     private $black;
 
+    //lista de colores correctos
     private $white;
 
+    //Numero de movimientos.
     private $maxNumMove;
 
+    //indica si el juego es ganado o no.
+    private $winGame;
+
+    //lista de movimientos.
     private $move;
+
+
 
 
     /**
@@ -78,6 +87,22 @@ class EvaluationModel
     public function setMove($move): void
     {
         $this->move = $move;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWinGame()
+    {
+        return $this->winGame;
+    }
+
+    /**
+     * @param mixed $winGame
+     */
+    public function setWinGame($winGame): void
+    {
+        $this->winGame = $winGame;
     }
 
 

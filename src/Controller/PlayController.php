@@ -24,12 +24,12 @@ class PlayController extends Controller
       */
       public function obtainGameDetails(Request $request, $gameid)
       {
-         
+
             $game = $this->getDoctrine()
             ->getRepository(MasterMindGame::class)
             ->find($gameid);
 
-            if(null!==$game && State::STARTED===$game->getState()){
+            if(null!=$game && State::STARTED===$game->getState()){
 
                 $userMovementInput = new UserMovementInput();
                 $form = $this->createFormBuilder($userMovementInput)
@@ -52,17 +52,18 @@ class PlayController extends Controller
                         )); 
                     }else{*/
 
+                        //obtenemos la clase de validación
                         $validationMove = new ValidateMoveUtil();
                         //$responseValidationMove = $validationMove->validateMove(str_split($userMovementInput->inputString),$game);
-                        $responseValidationMove = $validationMove->validateMove($userMovementInput->inputString,$game);
 
-    
+                    $responseValidationMove = $validationMove->validateMove($userMovementInput->inputString,$game);
+
                         //obtenemos el acceso a la BD
-                        $em = $this->getDoctrine()->getManager();
+                        //$em = $this->getDoctrine()->getManager();
                         // guardar en BD
-                        $em->persist($responseValidationMove->getMove());
+                        //$em->persist($responseValidationMove->getMove());
                         // ejecutar (realmente) la query
-                        $em->flush();  
+                        //$em->flush();
     
                         return new Response(
                             '<html><body>movimiento insertado</body></html>'
@@ -76,7 +77,7 @@ class PlayController extends Controller
                         'message' => "",
                     )); 
                 }
-            }else if(null!==$game && State::STARTED!==$game->getState()){
+            }else if(null!=$game && State::STARTED!==$game->getState()){
 
                 $state = $game->getState();
 

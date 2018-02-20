@@ -8,7 +8,7 @@ class UserMovementInput
     /**
      * @Assert\Regex(
      * pattern="/^([0-9],){5}[0-9]$/",
-     * message="Debes escribir 6 números entre el 0 y el 9"
+     * message="Debes escribir 6 números entre el 0 y el 9 separados por comas"
      * )
      */
     public  $inputString; //validación del input del usuario con esta expresión regular

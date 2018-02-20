@@ -48,7 +48,7 @@ class PlayController extends Controller
                         return $this->render('games/play.html.twig', array(
                             'name' => $game->getName(),
                             'form' => $form->createView(),
-                            'message' => "Debes escribir 6 números entre el 0 y el 9",
+                            'message' => "Debes escribir 6 números entre el 0 y el 9 separados por ,",
                         )); 
                     }else{
 

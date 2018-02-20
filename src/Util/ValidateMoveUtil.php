@@ -7,6 +7,7 @@ use App\Entity\Move;
 use App\Entity\State;
 use App\Model\EvaluationModel;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 class ValidateMoveUtil
 {
@@ -20,24 +21,7 @@ class ValidateMoveUtil
     const MAX_MOVE_GAME=3;
 
 
-    private function validateMaxMove($gameid){
-
-        $validate = true;
-
-        $movesInfo = $this->getDoctrine()
-            ->getRepository(Move::class)
-            ->findBy(array(
-                'masterMindGame' =>$gameid
-            ));
-
-
-        if(null!=$movesInfo && (count($movesInfo)+1) >= ValidateMoveUtil::MAX_MOVE_GAME){
-            //si el numero de jugadas, mas la actual supera el maximo, entonces fin del juego.
-            $validate = false;
-        }
-
-        return $validate;
-    }
+    private $doctrine;
 
 
     public function  validateMove($moveInfo, $game){
@@ -172,7 +156,17 @@ class ValidateMoveUtil
     }
 
     private function updateGame($game){
-        //TODO
+
+        //obtenemos el acceso a la BD
+        $em = $this->getDoctrine()->getManager();
+
+        // guardar en BD
+        $em->persist($game);
+
+        // ejecutar (realmente) la query
+        $em->flush();
+
+
     }
 
     //Función que inserta el movimiento en base de datos.
@@ -186,6 +180,42 @@ class ValidateMoveUtil
 
         // ejecutar (realmente) la query
         $em->flush();
+    }
+
+
+    private function validateMaxMove($gameid){
+
+        $validate = true;
+
+        $movesInfo = $this->getDoctrine()
+            ->getRepository(Move::class)
+            ->findBy(array(
+                'masterMindGame' =>$gameid
+            ));
+
+
+        if(null!=$movesInfo && (count($movesInfo)+1) >= ValidateMoveUtil::MAX_MOVE_GAME){
+            //si el numero de jugadas, mas la actual supera el maximo, entonces fin del juego.
+            $validate = false;
+        }
+
+        return $validate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDoctrine()
+    {
+        return $this->doctrine;
+    }
+
+    /**
+     * @param mixed $doctrine
+     */
+    public function setDoctrine($doctrine): void
+    {
+        $this->doctrine = $doctrine;
     }
 
 

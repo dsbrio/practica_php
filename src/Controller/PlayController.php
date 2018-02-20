@@ -54,6 +54,7 @@ class PlayController extends Controller
 
                         //obtenemos la clase de validación
                         $validationMove = new ValidateMoveUtil();
+                        $validationMove->setDoctrine($this->getDoctrine());
                         $responseValidationMove = $validationMove->validateMove($userMovementInput->inputString,$game);
 
                         //obtenemos el acceso a la BD

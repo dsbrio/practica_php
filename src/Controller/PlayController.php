@@ -49,6 +49,7 @@ class PlayController extends Controller
                             'name' => $game->getName(),
                             'form' => $form->createView(),
                             'message' => "Debes escribir 6 números entre el 0 y el 9 separados por ,",
+                            'restMove' => " "
                         )); 
                     }else{
 
@@ -56,6 +57,7 @@ class PlayController extends Controller
                         $validationMove = new ValidateMoveUtil();
                         $validationMove->setDoctrine($this->getDoctrine());
                         $responseValidationMove = $validationMove->validateMove($userMovementInput->inputString,$game);
+
 
                         $move = new Move();
                         $move->setMasterMindGame($game);
@@ -93,6 +95,7 @@ class PlayController extends Controller
                                 'name' => $game->getName(),
                                 'form' => $form->createView(),
                                 'message' => "Jugada erronea, introduce otra combinación".$historicResults,
+                                'restMove' => "Movimientos restantes: ".$responseValidationMove->getRestNumMove()
                             ));
                         }
     
@@ -104,6 +107,7 @@ class PlayController extends Controller
                         'name' => $game->getName(),
                         'form' => $form->createView(),
                         'message' => "",
+                        'restMove' => " "
                     )); 
                 }
             }else if(null!=$game && State::STARTED!==$game->getState()){

@@ -14,8 +14,8 @@ class ValidateMoveUtil
 
 
     const DEFINED_EVALUATION_MOVE= array(
-        "FAIL",
-        "OK"
+        "FALLIDO",
+        "CORRECTO"
     );
 
     const MAX_MOVE_GAME=3;
@@ -109,31 +109,34 @@ class ValidateMoveUtil
             $evaluationModel->setWinGame(true);
 
         }else{
-
-            if(!$this->validateMaxMove($game->getId())){
-                //se ha alcanzado el máximo de intentos, 15.
-
-                //Actualizamos el estado del juego a derrota.
-                $game->setState(State::FINISH_LOST);
-
-                //actualizamos el juego en la base de datos.
-                $this->updateGame($game);
-
-                //Indicamos que se ha obtenido el maximo de movimientos.
-                $evaluationModel->setMaxNumMove(ValidateMoveUtil::MAX_MOVE_GAME);
-
-                //indicamos que se ha perdido el juego.
-                $evaluationModel->setWinGame(false);
-
-            }else{
                 //Jugadas restantes.
 
                 $totalMove = $this->getMove($game->getId());
 
-                $evaluationModel->setRestNumMove(ValidateMoveUtil::MAX_MOVE_GAME - count($totalMove)+1);
+                if(count($totalMove)==0){
 
-            }
+                    $evaluationModel->setRestNumMove(ValidateMoveUtil::MAX_MOVE_GAME-1);
 
+                }else{
+                    $evaluationModel->setRestNumMove(ValidateMoveUtil::MAX_MOVE_GAME - (count($totalMove)+1));
+                }
+
+                echo $evaluationModel->getRestNumMove();
+
+                if( $evaluationModel->getRestNumMove()===0){
+
+                    //Actualizamos el estado del juego a derrota.
+                    $game->setState(State::FINISH_LOST);
+
+                    //actualizamos el juego en la base de datos.
+                    $this->updateGame($game);
+
+                    //Indicamos que se ha obtenido el maximo de movimientos.
+                    $evaluationModel->setMaxNumMove(ValidateMoveUtil::MAX_MOVE_GAME);
+
+                    //indicamos que se ha perdido el juego.
+                    $evaluationModel->setWinGame(false);
+                }
         }
 
 
@@ -175,19 +178,6 @@ class ValidateMoveUtil
         $em->flush();
 
 
-    }
-
-    //Función que inserta el movimiento en base de datos.
-    private function insertMove($move){
-
-        //obtenemos el acceso a la BD
-        $em = $this->getDoctrine()->getManager();
-
-        // guardar en BD
-        $em->persist($move);
-
-        // ejecutar (realmente) la query
-        $em->flush();
     }
 
 

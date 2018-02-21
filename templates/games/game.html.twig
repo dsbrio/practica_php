@@ -13,7 +13,7 @@
         <h3>Fecha de la jugada: {{ move.date }}</h3>
         <h3>Resultado de la jugada: {{ move.evaluation }}</h3>
         <h3>Datos de la jugada</h3>
-            <li>Movimiento: {{move.colorList}} </li>
+            <li>Movimiento: {{move.colorList}} ==> Fichas negras: {{ move.blackString }}, Fichas blancas: {{ move.whiteString }}</li>
     {% endfor %}
 </ul>
 

@@ -127,6 +127,9 @@ class PlayController extends Controller
 
       }
 
+      /**
+       * funcion que busca los movimientos de toda la partida y los evalua para dar feedback al usuario
+       */
       private function obtainHistoricResults($masterMindGame){
 
         $moves = $this->getDoctrine()
@@ -141,6 +144,8 @@ class PlayController extends Controller
         $validationMove->setDoctrine($this->getDoctrine());
 
         for ($i = 0; $i < count($moves); $i++) {
+echo $i;
+            //validamos cada movimiento
             $responseValidationMove = $validationMove->validateMove(
                 implode(',', $moves[$i]->getColorList()),
                 $masterMindGame
@@ -148,15 +153,15 @@ class PlayController extends Controller
 
             $result = new ResultViewModel();
 
+            //montamos 2 strings ya preparadas para mostrarlas al usuario en función de las casillas blancas y negras de la validación
             $blackString = '';
-            for ($i = 0; $i < count($responseValidationMove->getBlack()); $i++) {
+            for ($j = 0; $j < count($responseValidationMove->getBlack()); $j++) {
                 $blackString .= '(X)';
             }
             $whiteString = '';
-            for ($i = 0; $i < count($responseValidationMove->getWhite()); $i++) {
+            for ($k = 0; $k < count($responseValidationMove->getWhite()); $k++) {
                 $whiteString .= '(_)';
             }
-            print_r($responseValidationMove);
             $result->setBlackString($blackString);
             $result->setWhiteString($whiteString);
 

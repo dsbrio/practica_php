@@ -18,7 +18,7 @@ class ValidateMoveUtil
         "OK"
     );
 
-    const MAX_MOVE_GAME=3;
+    const MAX_MOVE_GAME=15;
 
 
     private $doctrine;
@@ -63,12 +63,12 @@ class ValidateMoveUtil
 
                     if ($moveInfoArray[$i] == $gameMoveArray[$j]) {
 
-                        array_push($whiteArray, "X");
-
                         if ($i == $j) {
                             array_push($blackArray, "X");
 
                             $auxArray[strval($j)] = $gameMoveArray[$j];
+                        }else{
+                            array_push($whiteArray, "X");
                         }
 
                         break;
@@ -77,12 +77,12 @@ class ValidateMoveUtil
 
                     if ($moveInfoArray[$i] == $gameMoveArray[$j]) {
 
-                        array_push($whiteArray, "X");
-
                         if ($i == $j) {
                             array_push($blackArray, "X");
 
                             $auxArray[strval($j)] = $gameMoveArray[$j];
+                        }else{
+                            array_push($whiteArray, "X");
                         }
 
                         break;

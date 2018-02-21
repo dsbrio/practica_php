@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\State;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Model\ResultViewModel;
 
 
 use App\Util\ValidateMoveUtil;
@@ -49,7 +50,8 @@ class PlayController extends Controller
                             'name' => $game->getName(),
                             'form' => $form->createView(),
                             'message' => "Debes escribir 6 números entre el 0 y el 9 separados por ,",
-                            'restMove' => " "
+                            'restMove' => " ",
+                            'historicResults' => null
                         )); 
                     }else{
 
@@ -94,8 +96,9 @@ class PlayController extends Controller
                             return $this->render('games/play.html.twig', array(
                                 'name' => $game->getName(),
                                 'form' => $form->createView(),
-                                'message' => "Jugada erronea, introduce otra combinación".$historicResults,
-                                'restMove' => "Movimientos restantes: ".$responseValidationMove->getRestNumMove()
+                                'restMove' => "Movimientos restantes: ".$responseValidationMove->getRestNumMove(),
+                                'message' => "Jugada erronea, introduce otra combinación",
+                                'historicResults' => $historicResults
                             ));
                         }
     
@@ -107,7 +110,8 @@ class PlayController extends Controller
                         'name' => $game->getName(),
                         'form' => $form->createView(),
                         'message' => "",
-                        'restMove' => " "
+                        'restMove' => " ",
+                        'historicResults' => null
                     )); 
                 }
             }else if(null!=$game && State::STARTED!==$game->getState()){
@@ -135,7 +139,7 @@ class PlayController extends Controller
             ['masterMindGame' => $masterMindGame]
         );
 
-        $stringHistoricResults = '';
+        $historicResults = array();
 
         $validationMove = new ValidateMoveUtil();
         $validationMove->setDoctrine($this->getDoctrine());
@@ -145,12 +149,27 @@ class PlayController extends Controller
                 implode(',', $moves[$i]->getColorList()),
                 $masterMindGame
             );
-            $stringHistoricResults .= 
-                implode($responseValidationMove->getBlack())
-                .implode($responseValidationMove->getWhite())
-                .'<br/>';
+
+            $result = new ResultViewModel();
+
+            $blackString = '';
+            for ($i = 0; $i < count($responseValidationMove->getBlack()); $i++) {
+                $blackString .= '(X)';
+            }
+            $whiteString = '';
+            for ($i = 0; $i < count($responseValidationMove->getWhite()); $i++) {
+                $whiteString .= '(_)';
+            }
+            print_r($responseValidationMove);
+            $result->setBlackString($blackString);
+            $result->setWhiteString($whiteString);
+
+            array_push(
+                $historicResults,
+                $result
+            );
         }
 
-        return $stringHistoricResults;
+        return $historicResults;
       }
 }

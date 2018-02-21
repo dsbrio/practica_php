@@ -65,17 +65,7 @@ class MasterMindIndexController extends Controller
 
                     //lista de colores.
 
-                    $colors = array();
-                    foreach ($value->getColorList() as $color) {
-
-                        $colorModel = new ColorModel();
-
-                        $colorModel->setColorName($color);
-
-                        array_push($colors, $colorModel);
-                    }
-
-                    $move->setColorList($colors);
+                    $move->setColorList(implode(',', $value->getColorList()));
 
                     array_push($moves, $move);
                 }

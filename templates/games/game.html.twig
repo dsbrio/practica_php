@@ -13,9 +13,7 @@
         <h3>Fecha de la jugada: {{ move.date }}</h3>
         <h3>Resultado de la jugada: {{ move.evaluation }}</h3>
         <h3>Datos de la jugada</h3>
-        {% for color in move.colorList %}
-                <h3>Color: {{ color.colorName }}</h3>
-        {% endfor %}
+            <li>Movimiento: {{move.colorList}} </li>
     {% endfor %}
 </ul>
 

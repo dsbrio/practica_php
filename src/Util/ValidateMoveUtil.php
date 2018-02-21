@@ -37,7 +37,7 @@ class ValidateMoveUtil
         //por defecto, fail.
         $evaluation = ValidateMoveUtil::DEFINED_EVALUATION_MOVE[0];
 
-        if(count($whiteArray)=== count($game->getColorList())){
+        if(count($blackArray)=== count($game->getColorList())){
 
             //si la longitud de los 3 arrays es la misma, entonces es correcta la combinación.
             $evaluation = ValidateMoveUtil::DEFINED_EVALUATION_MOVE[1];
@@ -63,9 +63,7 @@ class ValidateMoveUtil
                 }else{
                     $evaluationModel->setRestNumMove(ValidateMoveUtil::MAX_MOVE_GAME - (count($totalMove)+1));
                 }
-
-                echo $evaluationModel->getRestNumMove();
-
+                
                 if( $evaluationModel->getRestNumMove()===0){
 
                     //Actualizamos el estado del juego a derrota.

@@ -62,7 +62,9 @@ class PlayController extends Controller
                         $move = new Move();
                         $move->setMasterMindGame($game);
                         $move->setDate(new \DateTime());
-                        $move->setColorList(str_split($userMovementInput->inputString));
+
+
+                        $move->setColorList(explode(',', $userMovementInput->inputString));
                         $move->setEvaluation($responseValidationMove->getMoveEvaluation());
 
                         //obtenemos el acceso a la BD

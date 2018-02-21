@@ -6,3 +6,10 @@
 {{ form_end(form) }}
 
 <h4>{{message}}</h4>
+
+<h3>Resultados de la partida:</h3>
+<ol>
+{% for result in historicResults %}
+    <li>Fichas negras: {{ result.blackString }}, Fichas blancas: {{ result.whiteString }}</li>
+{% endfor %}
+</ol>

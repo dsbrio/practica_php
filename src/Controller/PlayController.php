@@ -166,6 +166,7 @@ class PlayController extends Controller
             }
             $result->setBlackString($blackString);
             $result->setWhiteString($whiteString);
+            $result->setMoveString(implode(',', $moves[$i]->getColorList()));
 
             array_push(
                 $historicResults,

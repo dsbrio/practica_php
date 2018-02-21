@@ -8,6 +8,8 @@ class ResultViewModel{
 
     private $whiteString;
 
+    private $moveString;
+
 
     /**
      * Get the value of blackString
@@ -45,6 +47,26 @@ class ResultViewModel{
     public function setWhiteString($whiteString)
     {
         $this->whiteString = $whiteString;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of moveString
+     */ 
+    public function getMoveString()
+    {
+        return $this->moveString;
+    }
+
+    /**
+     * Set the value of moveString
+     *
+     * @return  self
+     */ 
+    public function setMoveString($moveString)
+    {
+        $this->moveString = $moveString;
 
         return $this;
     }

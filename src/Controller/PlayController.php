@@ -148,23 +148,21 @@ class PlayController extends Controller
         $validationMove->setDoctrine($this->getDoctrine());
 
         for ($i = 0; $i < count($moves); $i++) {
-echo $i;
+
             //validamos cada movimiento
-            $responseValidationMove = $validationMove->validateMove(
-                implode(',', $moves[$i]->getColorList()),
-                $masterMindGame
-            );
+            $blackArray = $validationMove->getResultArray(true, implode(',', $moves[$i]->getColorList()), $masterMindGame);
+            $whiteArray = $validationMove->getResultArray(false, implode(',', $moves[$i]->getColorList()), $masterMindGame);
 
             $result = new ResultViewModel();
 
             //montamos 2 strings ya preparadas para mostrarlas al usuario en función de las casillas blancas y negras de la validación
             $blackString = '';
-            for ($j = 0; $j < count($responseValidationMove->getBlack()); $j++) {
+            for ($j = 0; $j < count($blackArray); $j++) {
                 $blackString .= '(X)';
             }
             $whiteString = '';
-            for ($k = 0; $k < count($responseValidationMove->getWhite()); $k++) {
-                $whiteString .= '(_)';
+            for ($k = 0; $k < count($whiteArray); $k++) {
+                $whiteString .= '( )';
             }
             $result->setBlackString($blackString);
             $result->setWhiteString($whiteString);

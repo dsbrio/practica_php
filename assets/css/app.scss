@@ -46,7 +46,9 @@ $acceAzul: #396696;
 
 a{
   text-decoration: none;
-  color: $acceVerde
+  color: $acceVerde;
+  justify-content: center;
+  display: flex;
 }
 
 
@@ -74,13 +76,28 @@ body{
         li{
           list-style-type: none;
           padding: 2px;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-column-gap: 50px;
         }
 
+      }
+      .content-list-games_title{
+        font-size: 21px;
+        font-weight: 500;
+        justify-content: left;
+        padding: 10px 0px 10px 0px;
       }
 
     }
 
   }
+}
+
+.content{
+  background-color: #E9DAD6;
+  display: grid;
+  justify-content: center;
 }
 
 h1 {

@@ -1,7 +1,49 @@
-Nueva partida:
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}
 
-Nombre de la partida (opcional)
-{{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
+           <div class="title">
+             <h1>Mastermind :o</h1>
+            </div>
+
+            <div class="content-block">
+
+            <div><img src="https://giltesa.com/wp-content/uploads/2010/12/mastermint.png" alt="Mastermind"></div>
+
+            <div class="content-list-games">
+              <div class="content-list-games_title">
+                    Nombre de la partida (opcional)
+              </div>
+
+
+              <div>
+                            {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            {{ form_end(form) }}
+
+              </div>
+                <div><a href="{{ path('index')}}" class="myButton">Volver</a></div>
+             </div>
+
+
+            </div>
+
+
+            </div>
+
+
+
+
+        {% endblock %}
+        <script src="{{ asset('build/app.js') }}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

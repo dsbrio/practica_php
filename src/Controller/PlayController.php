@@ -32,6 +32,8 @@ class PlayController extends Controller
 
             if(null!=$game && State::STARTED===$game->getState()){
 
+                $historicResults = $this->obtainHistoricResults($game);
+
                 $userMovementInput = new UserMovementInput();
                 $form = $this->createFormBuilder($userMovementInput)
                     ->add('inputString', TextType::class, array('label' => 'Colores: '))
@@ -51,7 +53,7 @@ class PlayController extends Controller
                             'form' => $form->createView(),
                             'message' => "Debes escribir 6 números entre el 0 y el 9 separados por ,",
                             'restMove' => " ",
-                            'historicResults' => null
+                            'historicResults' => $historicResults
                         )); 
                     }else{
 
@@ -88,10 +90,10 @@ class PlayController extends Controller
                                 'error' => 'Lo sentimos, has alcanzado el máximo de intentos y has perdido. ¿Quieres jugar otra? Si es asi, vete a inicio y comienza una nueva partida.',
                             ));
                         }
+                        
+                        $historicResults = $this->obtainHistoricResults($game);
 
                         if(!$responseValidationMove->getWinGame() && null==$responseValidationMove->getMaxNumMove()){
-
-                            $historicResults = $this->obtainHistoricResults($game);
 
                             return $this->render('games/play.html.twig', array(
                                 'name' => $game->getName(),
@@ -111,7 +113,7 @@ class PlayController extends Controller
                         'form' => $form->createView(),
                         'message' => "",
                         'restMove' => " ",
-                        'historicResults' => null
+                        'historicResults' => $historicResults
                     )); 
                 }
             }else if(null!=$game && State::STARTED!==$game->getState()){
@@ -149,23 +151,8 @@ class PlayController extends Controller
 
         for ($i = 0; $i < count($moves); $i++) {
 
-            //validamos cada movimiento
-            $blackArray = $validationMove->getResultArray(true, implode(',', $moves[$i]->getColorList()), $masterMindGame);
-            $whiteArray = $validationMove->getResultArray(false, implode(',', $moves[$i]->getColorList()), $masterMindGame);
-
-            $result = new ResultViewModel();
-
-            //montamos 2 strings ya preparadas para mostrarlas al usuario en función de las casillas blancas y negras de la validación
-            $blackString = '';
-            for ($j = 0; $j < count($blackArray); $j++) {
-                $blackString .= '(X)';
-            }
-            $whiteString = '';
-            for ($k = 0; $k < count($whiteArray); $k++) {
-                $whiteString .= '( )';
-            }
-            $result->setBlackString($blackString);
-            $result->setWhiteString($whiteString);
+            $result = $validationMove->getResultViewModel(implode(',', $moves[$i]->getColorList()), $masterMindGame);
+      
             $result->setMoveString(implode(',', $moves[$i]->getColorList()));
 
             array_push(

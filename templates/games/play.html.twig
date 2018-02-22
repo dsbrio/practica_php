@@ -13,7 +13,7 @@
 <h3>Resultados de la partida:</h3>
 <ol>
 {% for result in historicResults %}
-    <li>Movimiento: {{result.moveString}} ==> Fichas negras: {{ result.blackString }}, Fichas blancas: {{ result.whiteString }}</li>
+    <li>Movimiento: {{result.moveString}} ==> Fichas negras: {{ result.blackAsString }}, Fichas blancas: {{ result.whiteAsString }}</li>
 {% endfor %}
 </ol>
 

@@ -68,8 +68,9 @@ class MasterMindIndexController extends Controller
                     $validationMove->setDoctrine($this->getDoctrine());
 
                     //validamos cada movimiento
-                    $blackArray = $validationMove->getResultArray(true, implode(',', $value->getColorList()), $gameInfo);
-                    $whiteArray = $validationMove->getResultArray(false, implode(',', $value->getColorList()), $gameInfo);
+                    $resultViewModel = $validationMove->getResultViewModel(implode(',', $value->getColorList()), $gameInfo);
+                    $blackArray = $resultViewModel->getBlackArray();
+                    $whiteArray = $resultViewModel->getWhiteArray();
 
                     //montamos 2 strings ya preparadas para mostrarlas al usuario en función de las casillas blancas y negras de la validación
                     $blackString = '';

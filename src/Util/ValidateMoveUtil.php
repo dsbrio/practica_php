@@ -6,6 +6,7 @@ namespace App\Util;
 use App\Entity\Move;
 use App\Entity\State;
 use App\Model\EvaluationModel;
+use App\Model\ResultViewModel;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -28,11 +29,12 @@ class ValidateMoveUtil
 
         $evaluationModel = new EvaluationModel();
 
-        //array con los aciertos de color y posición
-        $blackArray = $this->getResultArray(true, $moveInfo, $game);
+        $resultViewModel = $this->getResultViewModel($moveInfo, $game);
 
+        //array con los aciertos de color y posición
+        $blackArray =  $resultViewModel->getBlackArray();
         //array con los aciertos de color.
-        $whiteArray = $this->getResultArray(false, $moveInfo, $game);
+        $whiteArray = $resultViewModel->getWhiteArray();
 
         //por defecto, fail.
         $evaluation = ValidateMoveUtil::DEFINED_EVALUATION_MOVE[0];
@@ -92,17 +94,16 @@ class ValidateMoveUtil
     }
 
 
-    public function getResultArray($returnBlack, $moveInfo, $game){
+    public function getResultViewModel($moveInfo, $game){
 
         //array con las posiciones que se han cubierto para no tener en cuenta las posiciones repetidas.
         $auxArray = array(
-            "0" =>-1,
-            "1" =>-1,
-            "2" =>-1,
-            "3" =>-1,
-            "4" =>-1,
-            "5" =>-1
-
+            "0" =>false,
+            "1" =>false,
+            "2" =>false,
+            "3" =>false,
+            "4" =>false,
+            "5" =>false
         );
 
         $whiteArray = array();
@@ -114,48 +115,42 @@ class ValidateMoveUtil
         //obtenemos el array de elementos generado para el juego.
         $gameMoveArray = $game->getColorList();
 
-        //recorremos toda la lista y comprobamos que se encuentra en la posición correcta y es el color correcto.
-        for ($i = 0; $i < count($moveInfoArray); $i++) {
+        //primero buscamos las posiciones negras con el mismo indice para el array de movimiento y el del juego
+        for ($k = 0; $k < count($moveInfoArray); $k++) {
+            echo($gameMoveArray[$k]);
+            if ($moveInfoArray[$k] == $gameMoveArray[$k]) {
+                array_push($blackArray, "X");
+                $auxArray[$k] = true;
+            }
+        }
 
-            for ($j = 0; $j <  count($gameMoveArray); $j++) {
+        //recorremos toda la lista y comprobamos que el color existe en otra posición (ficha blanca)
+        for ($j = 0; $j <  count($gameMoveArray); $j++) {
 
-                if(count($auxArray)==0) {
+            for ($i = 0; $i < count($moveInfoArray); $i++) {
 
-                    if ($moveInfoArray[$i] == $gameMoveArray[$j]) {
-
-                        if ($i == $j) {
-                            array_push($blackArray, "X");
-
-                        }else{
-                            array_push($whiteArray, "X");
-                        }
-                        $auxArray[strval($j)] = $gameMoveArray[$j];
-
-                        break;
-                    }
-                }else if(count($auxArray)>0 && -1==$auxArray[strval($j)]){
+                if($auxArray[$j] == false){ //si el array auxiliar no la tiene todavía marcada esa posición con ficha, comprobamos
 
                     if ($moveInfoArray[$i] == $gameMoveArray[$j]) {
 
-                        if ($i == $j) {
-                            array_push($blackArray, "X");
+                        array_push($whiteArray, "X");
 
-                        }else{
-                            array_push($whiteArray, "X");
-                        }
-                        $auxArray[strval($j)] = $gameMoveArray[$j];
-                        
+                        $auxArray[$j] = true;
+
                         break;
                     }
 
                 }
+
             }
         }
 
-        if($returnBlack){
-            return $blackArray;
-        }
-        return $whiteArray;
+        $resultViewModel = new ResultViewModel(); 
+        $resultViewModel->setBlackArray($blackArray);
+        $resultViewModel->setWhiteArray($whiteArray);
+
+        return $resultViewModel;
+
     }
 
 

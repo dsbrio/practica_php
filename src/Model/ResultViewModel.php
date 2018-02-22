@@ -4,49 +4,49 @@ namespace App\Model;
 
 class ResultViewModel{
 
-    private $blackString;
+    private $blackArray;
 
-    private $whiteString;
+    private $whiteArray;
 
     private $moveString;
 
-
+ 
     /**
-     * Get the value of blackString
+     * Get the value of blackArray
      */ 
-    public function getBlackString()
+    public function getBlackArray()
     {
-        return $this->blackString;
+        return $this->blackArray;
     }
 
     /**
-     * Set the value of blackString
+     * Set the value of blackArray
      *
      * @return  self
      */ 
-    public function setBlackString($blackString)
+    public function setBlackArray($blackArray)
     {
-        $this->blackString = $blackString;
+        $this->blackArray = $blackArray;
 
         return $this;
     }
 
     /**
-     * Get the value of whiteString
+     * Get the value of whiteArray
      */ 
-    public function getWhiteString()
+    public function getWhiteArray()
     {
-        return $this->whiteString;
+        return $this->whiteArray;
     }
 
     /**
-     * Set the value of whiteString
+     * Set the value of whiteArray
      *
      * @return  self
      */ 
-    public function setWhiteString($whiteString)
+    public function setWhiteArray($whiteArray)
     {
-        $this->whiteString = $whiteString;
+        $this->whiteArray = $whiteArray;
 
         return $this;
     }
@@ -70,5 +70,24 @@ class ResultViewModel{
 
         return $this;
     }
+
+    //montamos 2 strings ya preparadas para mostrarlas al usuario en función de las casillas blancas y negras de la validación
+    public function getBlackAsString(){
+        $blackString = '';
+        for ($j = 0; $j < count($this->getBlackArray()); $j++) {
+            $blackString .= '(X)';
+        }
+        return $blackString;
+    }
+
+    public function getWhiteAsString(){
+        
+        $whiteString = '';
+        for ($k = 0; $k < count($this->getWhiteArray()); $k++) {
+            $whiteString .= '( )';
+        }
+        return $whiteString;
+    }
+
 }
 

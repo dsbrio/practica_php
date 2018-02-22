@@ -1,19 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}
 
-<h3>Jugando partida: {{name}}</h3>
+           <div class="title">
+             <h1>Mastermind :o</h1>
+            </div>
 
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
-
-<h4>{{message}}</h4>
+            <div class="content-block">
 
 
-<h4>{{restMove}}</h4>
+            <div class="style-image"><img src="https://giltesa.com/wp-content/uploads/2010/12/mastermint.png" alt="Mastermind"></div>
 
-<h3>Resultados de la partida:</h3>
-<ol>
-{% for result in historicResults %}
-    <li>Movimiento: {{result.moveString}} ==> Fichas negras: {{ result.blackString }}, Fichas blancas: {{ result.whiteString }}</li>
-{% endfor %}
-</ol>
+            <div class="content-list-games-2">
+              <div class="content-list-games_title">
+                  <h1>Jugando partida: {{name}}</h1>
+              </div>
 
+              <div class="content-list_games_data">
+                 {{ form_start(form) }}
+                 {{ form_widget(form) }}
+                 {{ form_end(form) }}
+
+                 <h4>{{message}}</h4>
+
+
+                 <h4>{{restMove}}</h4>
+              </div>
+                <div><a href="{{ path('index')}}" class="myButton">Volver</a></div>
+             </div>
+
+            </div>
+
+
+             <div>
+
+                  <div><h1>Resultados de la partida:</h1></div>
+
+
+                    <ol>
+                    {% for result in historicResults %}
+                        <li>Movimiento: {{result.moveString}} ==> Fichas negras: {{ result.blackString }}, Fichas blancas: {{ result.whiteString }}</li>
+                    {% endfor %}
+                    </ol>
+
+
+
+              </div>
+
+
+
+
+        {% endblock %}
+        <script src="{{ asset('build/app.js') }}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -20,8 +20,9 @@ class NewGameController extends Controller
     {
         $newGame = new MasterMindGame();
         $form = $this->createFormBuilder($newGame)
-            ->add('name', TextType::class)
-            ->add('save', SubmitType::class, array('label' => 'Actualizar nombre'))
+            ->add('name', TextType::class, array('label' => 'Nombre:', 'attr' => array('class'=>'labelForm')))
+            ->add('save', SubmitType::class, array('label' => 'Actualizar nombre',
+                                                   'attr'=> array('class' => 'myButton')))
             ->getForm();
 
         $form->handleRequest($request);

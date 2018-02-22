@@ -1,22 +1,70 @@
-<a href="{{ path('index')}}">Inicio</a>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}
 
-<h1>Detalle de partida</h1>
+           <div class="title">
+             <h1>Mastermind :o</h1>
+            </div>
 
-<h3>Nombre de la partida: {{name}}</h3>
-<h3>Estado de la partida: {{state}}</h3>
-<h3>Fecha de creación: {{creationDate}}</h3>
-
-<h2>Jugadas realizadas:</h2>
-
-<ul>
-    {% for move in moves %}
-        <h3>Fecha de la jugada: {{ move.date }}</h3>
-        <h3>Resultado de la jugada: {{ move.evaluation }}</h3>
-        <h3>Datos de la jugada</h3>
-        {% for color in move.colorList %}
-                <h3>Color: {{ color.colorName }}</h3>
-        {% endfor %}
-    {% endfor %}
-</ul>
+            <div class="content-block">
 
 
+            <div class="style-image"><img src="https://giltesa.com/wp-content/uploads/2010/12/mastermint.png" alt="Mastermind"></div>
+
+            <div class="content-list-games-2">
+              <div class="content-list-games_title">
+                   <h1>Detalle de partida</h1>
+              </div>
+
+              <div class="content-list_games_data">
+                  <h3>Nombre de la partida:</h3> {{name}}
+                  <h3>Estado de la partida:</h3> {{state}}
+                  <h3>Fecha de creación: </h3>{{creationDate}}
+              </div>
+
+
+
+
+                <div><a href="{{ path('index')}}" class="myButton">Volver</a></div>
+             </div>
+
+            </div>
+
+                <div>
+                    <h1>Jugadas realizadas:</h2>
+                </div>
+
+                 <div class="content-block-detail">
+                   <div><h3>Fecha de la jugada</h3></div>
+                   <div><h3>Resultado de la jugada</h3></div>
+                   <div><h3>Datos de la jugada</h3></div>
+                 </div>
+
+            <div class="content-block-detail">
+                 {% for move in moves %}
+                     <div>{{ move.date }}</div>
+                     <div>{{ move.evaluation }}</div>
+                      <div>{% for color in move.colorList %}
+                            Color: {{ color.colorName }}
+                      {% endfor %}</div>
+                 {% endfor %}
+            </div>
+
+
+            </div>
+
+
+
+
+        {% endblock %}
+        <script src="{{ asset('build/app.js') }}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

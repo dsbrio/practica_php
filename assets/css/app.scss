@@ -67,6 +67,14 @@ body{
     padding-top: 30px;
     grid-template-columns: 1fr 1fr;
 
+    .style-image{
+      width: 303px;
+      height: 321px;
+      align-self: center;
+      justify-self: center;
+
+    }
+
     .content-list-games{
       display: grid;
       justify-content: center;
@@ -89,8 +97,42 @@ body{
         padding: 10px 0px 10px 0px;
       }
 
+      .formulario{
+        display: grid;
+        grid-template-rows: 0fr 1fr;
+        grid-gap: 10px;
+        .labelForm {
+          font-family: 'Times New Roman';
+          text-align: left;
+
+        }
+      }
+
+
+
+
     }
 
+    .content-list-games-2{
+      display: grid;
+      justify-content: center;
+      grid-template-rows: 0fr 1fr;
+      .content-list_games_data{
+        display: block;
+        justify-self: center;
+
+      }
+
+    }
+
+  }
+
+  .content-block-detail{
+    display: grid;
+    justify-content: center;
+    padding-top: 30px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
   }
 }
 

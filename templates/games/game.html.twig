@@ -1,0 +1,22 @@
+<a href="{{ path('index')}}">Inicio</a>
+
+<h1>Detalle de partida</h1>
+
+<h3>Nombre de la partida: {{name}}</h3>
+<h3>Estado de la partida: {{state}}</h3>
+<h3>Fecha de creación: {{creationDate}}</h3>
+
+<a href="{{ path('games', {'gameid': gameid}) }}">JUGAR</a>
+
+<h2>Jugadas realizadas:</h2>
+
+<ul>
+    {% for move in moves %}
+        <h3>Fecha de la jugada: {{ move.date }}</h3>
+        <h3>Resultado de la jugada: {{ move.evaluation }}</h3>
+        <h3>Datos de la jugada</h3>
+            <li>Movimiento: {{move.colorList}} ==> Fichas negras: {{ move.blackString }}, Fichas blancas: {{ move.whiteString }}</li>
+    {% endfor %}
+</ul>
+
+

@@ -1,0 +1,29 @@
+
+<h3>Jugando partida: {{name}}</h3>
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
+
+<h4>{{message}}</h4>
+
+
+<h4>{{restMove}}</h4>
+
+<h3>Resultados de la partida:</h3>
+<ol>
+{% for result in historicResults %}
+    <li><span>
+    Movimiento: {{result.moveString}} 
+    ==> Fichas negras: 
+    {% for blackItem in result.blackArray %}
+        <div class="blackItem">X</div>
+    {% endfor %}
+    Fichas blancas: 
+    {% for whiteItem in result.whiteArray %}
+        <div class="whiteItem">( )</div>
+    {% endfor %}
+    </span></li>
+{% endfor %}
+</ol>
+

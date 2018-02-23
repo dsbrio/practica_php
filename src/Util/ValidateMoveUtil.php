@@ -117,7 +117,6 @@ class ValidateMoveUtil
 
         //primero buscamos las posiciones negras con el mismo indice para el array de movimiento y el del juego
         for ($k = 0; $k < count($moveInfoArray); $k++) {
-            echo($gameMoveArray[$k]);
             if ($moveInfoArray[$k] == $gameMoveArray[$k]) {
                 array_push($blackArray, "X");
                 $auxArray[$k] = true;

@@ -71,23 +71,5 @@ class ResultViewModel{
         return $this;
     }
 
-    //montamos 2 strings ya preparadas para mostrarlas al usuario en función de las casillas blancas y negras de la validación
-    public function getBlackAsString(){
-        $blackString = '';
-        for ($j = 0; $j < count($this->getBlackArray()); $j++) {
-            $blackString .= '(X)';
-        }
-        return $blackString;
-    }
-
-    public function getWhiteAsString(){
-        
-        $whiteString = '';
-        for ($k = 0; $k < count($this->getWhiteArray()); $k++) {
-            $whiteString .= '( )';
-        }
-        return $whiteString;
-    }
-
 }
 

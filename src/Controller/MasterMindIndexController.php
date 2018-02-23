@@ -94,7 +94,8 @@ class MasterMindIndexController extends Controller
                 'name' => $gameInfo -> getName(),
                 'state' => $gameInfo->getState(),
                 'creationDate' => $gameInfo->getCreationDate()->format('Y-m-d H:i:s'),
-                'moves' => $moves
+                'moves' => $moves,
+                'gameid' => $gameid
             ));
       }
 }

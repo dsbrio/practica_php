@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\MasterMindGame;
 use App\Entity\Move;
-
+use App\Util\ValidateMoveUtil;
 
 use App\Model\MoveModel;
 use App\Model\ColorModel;
@@ -63,19 +63,28 @@ class MasterMindIndexController extends Controller
                     //añadimos la fecha de la jugada.
                     $move->setDate($value->getDate()->format('Y-m-d H:i:s'));
 
-                    //lista de colores.
 
-                    $colors = array();
-                    foreach ($value->getColorList() as $color) {
+                    $validationMove = new ValidateMoveUtil();
+                    $validationMove->setDoctrine($this->getDoctrine());
 
-                        $colorModel = new ColorModel();
+                    //validamos cada movimiento
+                    $resultViewModel = $validationMove->getResultViewModel(implode(',', $value->getColorList()), $gameInfo);
+                    $blackArray = $resultViewModel->getBlackArray();
+                    $whiteArray = $resultViewModel->getWhiteArray();
 
-                        $colorModel->setColorName($color);
-
-                        array_push($colors, $colorModel);
+                    //montamos 2 strings ya preparadas para mostrarlas al usuario en función de las casillas blancas y negras de la validación
+                    $blackString = '';
+                    for ($j = 0; $j < count($blackArray); $j++) {
+                        $blackString .= '(X)';
                     }
+                    $whiteString = '';
+                    for ($k = 0; $k < count($whiteArray); $k++) {
+                        $whiteString .= '( )';
+                    }
+                    $move->setBlackString($blackString);
+                    $move->setWhiteString($whiteString);
 
-                    $move->setColorList($colors);
+                    $move->setColorList(implode(',', $value->getColorList()));
 
                     array_push($moves, $move);
                 }
@@ -85,7 +94,8 @@ class MasterMindIndexController extends Controller
                 'name' => $gameInfo -> getName(),
                 'state' => $gameInfo->getState(),
                 'creationDate' => $gameInfo->getCreationDate()->format('Y-m-d H:i:s'),
-                'moves' => $moves
+                'moves' => $moves,
+                'gameid' => $gameid
             ));
       }
 }

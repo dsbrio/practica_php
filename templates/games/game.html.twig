@@ -6,6 +6,8 @@
 <h3>Estado de la partida: {{state}}</h3>
 <h3>Fecha de creación: {{creationDate}}</h3>
 
+<a href="{{ path('games', {'gameid': gameid}) }}">JUGAR</a>
+
 <h2>Jugadas realizadas:</h2>
 
 <ul>
@@ -13,9 +15,7 @@
         <h3>Fecha de la jugada: {{ move.date }}</h3>
         <h3>Resultado de la jugada: {{ move.evaluation }}</h3>
         <h3>Datos de la jugada</h3>
-        {% for color in move.colorList %}
-                <h3>Color: {{ color.colorName }}</h3>
-        {% endfor %}
+            <li>Movimiento: {{move.colorList}} ==> Fichas negras: {{ move.blackString }}, Fichas blancas: {{ move.whiteString }}</li>
     {% endfor %}
 </ul>
 

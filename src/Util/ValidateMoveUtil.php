@@ -96,8 +96,18 @@ class ValidateMoveUtil
 
     public function getResultViewModel($moveInfo, $game){
 
-        //array con las posiciones que se han cubierto para no tener en cuenta las posiciones repetidas.
-        $auxArray = array(
+        //array con las posiciones que se han cubierto del juego para no tener en cuenta las posiciones repetidas.
+        $gamePositionsCoveredArray = array(
+            "0" =>false,
+            "1" =>false,
+            "2" =>false,
+            "3" =>false,
+            "4" =>false,
+            "5" =>false
+        );
+
+        //array con las posiciones que se han cubierto del movimiento para no tener en cuenta las posiciones repetidas.
+        $movePositionsCoveredArray = array(
             "0" =>false,
             "1" =>false,
             "2" =>false,
@@ -117,10 +127,10 @@ class ValidateMoveUtil
 
         //primero buscamos las posiciones negras con el mismo indice para el array de movimiento y el del juego
         for ($k = 0; $k < count($moveInfoArray); $k++) {
-            echo($gameMoveArray[$k]);
             if ($moveInfoArray[$k] == $gameMoveArray[$k]) {
                 array_push($blackArray, "X");
-                $auxArray[$k] = true;
+                $gamePositionsCoveredArray[$k] = true;
+                $movePositionsCoveredArray[$k] = true;
             }
         }
 
@@ -129,13 +139,15 @@ class ValidateMoveUtil
 
             for ($i = 0; $i < count($moveInfoArray); $i++) {
 
-                if($auxArray[$j] == false){ //si el array auxiliar no la tiene todavía marcada esa posición con ficha, comprobamos
+                if($gamePositionsCoveredArray[$j] == false and $movePositionsCoveredArray[$i] == false){ 
+                    //si los arrays auxiliares no tienen todavía marcada esa posición como cubierta, comprobamos
 
                     if ($moveInfoArray[$i] == $gameMoveArray[$j]) {
 
                         array_push($whiteArray, "X");
 
-                        $auxArray[$j] = true;
+                        $gamePositionsCoveredArray[$j] = true;
+                        $movePositionsCoveredArray[$i] = true;
 
                         break;
                     }

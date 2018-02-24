@@ -44,11 +44,21 @@
                   <div><h1>Resultados de la partida:</h1></div>
 
 
-                    <ol>
-                    {% for result in historicResults %}
-                        <li>Movimiento: {{result.moveString}} ==> Fichas negras: {{ result.blackString }}, Fichas blancas: {{ result.whiteString }}</li>
-                    {% endfor %}
-                    </ol>
+                  <ol>
+                  {% for result in historicResults %}
+                      <li><span>
+                      Movimiento: {{result.moveString}}
+                      ==> Fichas negras:
+                      {% for blackItem in result.blackArray %}
+                          <div class="blackItem">X</div>
+                      {% endfor %}
+                      Fichas blancas:
+                      {% for whiteItem in result.whiteArray %}
+                          <div class="whiteItem">( )</div>
+                      {% endfor %}
+                      </span></li>
+                  {% endfor %}
+                  </ol>
 
 
 

@@ -63,7 +63,8 @@ class NewGameController extends Controller
                 'creationDate' => $newGame->getCreationDate()->format('Y-m-d H:i:s'),
                 'state' => $newGame->getState(),
                 'name' => $newGame->getName(),
-                'moves' => null
+                'moves' => null,
+                'gameid' => $newGame->getId()
             ));
         }else{
             return $this->render('games/newgame.html.twig', array(

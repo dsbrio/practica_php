@@ -10,3 +10,7 @@
 .web-server-pid
 ###< symfony/web-server-bundle ###
 .idea/
+
+node_modules/
+
+practica_php.iml

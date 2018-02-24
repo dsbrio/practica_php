@@ -46,17 +46,14 @@
 
                   <ol>
                   {% for result in historicResults %}
-                      <li><span>
-                      Movimiento: {{result.moveString}}
-                      ==> Fichas negras:
-                      {% for blackItem in result.blackArray %}
-                          <div class="blackItem">X</div>
+                      <div>Movimiento: {{result.moveString}} ==> Fichas negras: {% for blackItem in result.blackArray %}
+                          <div id="ficha-negra">X</div>
                       {% endfor %}
                       Fichas blancas:
                       {% for whiteItem in result.whiteArray %}
-                          <div class="whiteItem">( )</div>
+                          <div id="ficha-blanca"></div>
                       {% endfor %}
-                      </span></li>
+                      </div>
                   {% endfor %}
                   </ol>
 

@@ -31,8 +31,11 @@
 
 
 
-                <div><a href="{{ path('games', {'gameid': gameid}) }}">JUGAR</a></div>
-                <div><a href="{{ path('index')}}" class="myButton">Volver</a></div>
+                <div class="content-buttons-game">
+                    <div><a href="{{ path('games', {'gameid': gameid}) }}"  class="myButton">JUGAR</a></div>
+                    <div><a href="{{ path('index')}}" class="myButton">Volver</a></div>
+                </div>
+
              </div>
 
             </div>
@@ -51,7 +54,7 @@
                  {% for move in moves %}
                      <div>{{ move.date }}</div>
                      <div>{{ move.evaluation }}</div>
-                     <li> {{move.colorList}} ==> Fichas negras: {{ move.blackString }}, Fichas blancas: {{ move.whiteString }}</li>
+                     <div>{{move.colorList}} ==> Fichas negras: {{ move.blackString }}, Fichas blancas: {{ move.whiteString }}</div>
                  {% endfor %}
             </div>
 

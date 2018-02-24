@@ -61,11 +61,31 @@ body{
     justify-content: center;
   }
 
+  #ficha-negra{
+
+    width: 17px;
+    height: 17px;
+    background: #000;
+    border-radius: 90%;
+    margin-left: 9px;
+    margin-right: 4px;
+  }
+
+  #ficha-blanca{
+    width: 17px;
+    height: 17px;
+    background: #FFF;
+    border-radius: 90%;
+    margin-left: 9px;
+    margin-right: 4px;
+  }
+
   .content-block{
     display: grid;
     justify-content: center;
     padding-top: 30px;
     grid-template-columns: 1fr 1fr;
+
 
     .style-image{
       width: 303px;
@@ -109,6 +129,13 @@ body{
       display: grid;
       justify-content: center;
       grid-template-rows: 0fr 1fr;
+
+      .content-buttons-game{
+        display: grid;
+        justify-content: center;
+        grid-template-columns: 0fr 0fr;
+        grid-gap: 20px;
+      }
       .content-list_games_data{
         display: block;
         justify-self: center;

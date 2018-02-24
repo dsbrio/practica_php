@@ -97,21 +97,13 @@ body{
         padding: 10px 0px 10px 0px;
       }
 
-      .formulario{
-        display: grid;
-        grid-template-rows: 0fr 1fr;
-        grid-gap: 10px;
-        .labelForm {
-          font-family: 'Times New Roman';
-          text-align: left;
 
-        }
-      }
 
 
 
 
     }
+
 
     .content-list-games-2{
       display: grid;
@@ -121,11 +113,50 @@ body{
         display: block;
         justify-self: center;
 
+        #form{
+          display: grid;
+          grid-template-rows: 0fr 1fr;
+          grid-gap: 10px;
+
+          ul{
+            padding: 0;
+            li{
+              list-style-type: none;
+            }
+
+          }
+
+          div{
+            display: grid;
+            grid-template-rows: 0fr 1fr;
+            grid-gap: 10px;
+          }
+          .labelForm {
+            font-family: 'Times New Roman';
+            text-align: left;
+
+          }
+        }
+
+
       }
 
     }
 
   }
+
+  .content-block-2 {
+    display: grid;
+    justify-content: center;
+    padding-top: 30px;
+
+    .content-error{
+      display: grid;
+      justify-content: center;
+      grid-template-rows: 0fr 0fr;
+    }
+  }
+
 
   .content-block-detail{
     display: grid;

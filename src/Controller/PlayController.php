@@ -34,8 +34,9 @@ class PlayController extends Controller
 
                 $userMovementInput = new UserMovementInput();
                 $form = $this->createFormBuilder($userMovementInput)
-                    ->add('inputString', TextType::class, array('label' => 'Colores: '))
-                    ->add('save', SubmitType::class, array('label' => 'Enviar movimiento'))
+                    ->add('inputString', TextType::class, array('label' => 'Colores: ','attr' => array('class'=>'labelForm')))
+                    ->add('save', SubmitType::class, array('label' => 'Enviar movimiento',
+                                                                        'attr'=> array('class' => 'myButton')))
                     ->getForm();
 
                 $form->handleRequest($request);
